@@ -23,6 +23,28 @@
       1,
       { "extensions": [".jsx", ".tsx"] } // Allow JSX in .jsx and .tsx files
     ],
-    "react/jsx-indent": ["error", 2]
-  }
+    "react/jsx-indent": ["error", 2],
+    "eslint-plugin-import/prefer-default-export": "off",
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["src/app/**/*.js", "src/app/**/*.ts", "src/app/**/*.tsx"],
+      "rules": {
+        "react/function-component-definition": [
+          "error",
+          {
+            "namedComponents": "function-declaration",
+            "unnamedComponents": "function-declaration"
+          }
+        ]
+      }
+    }
+  ]
 }
