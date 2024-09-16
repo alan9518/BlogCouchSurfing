@@ -16,5 +16,13 @@
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint", "react", "prettier"],
-  "rules": {}
+  "rules": {
+    "react/react-in-jsx-scope": "off", // Disable this rule for React 17+
+    "jsx-a11y/anchor-is-valid": "off", // Optional: for Next.js link handling
+    "react/jsx-filename-extension": [
+      1,
+      { "extensions": [".jsx", ".tsx"] } // Allow JSX in .jsx and .tsx files
+    ],
+    "react/jsx-indent": ["error", 2]
+  }
 }
