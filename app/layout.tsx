@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { Sidebar } from './_shared/components/Sidebar/Sidebar';
+import QueryProvider from './_trpc/Provider';
+
 import './globals.css';
 
 const geistSans = localFont({
@@ -29,11 +31,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-dvh`}
       >
-        <div className="flex h-full">
-          <Sidebar />
+        <QueryProvider>
+          <div className="flex h-full">
+            <Sidebar />
 
-          <div className="w-full bg-white ">{children}</div>
-        </div>
+            <div className="w-full bg-white ">{children}</div>
+          </div>
+        </QueryProvider>
       </body>
     </html>
   );
