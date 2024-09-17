@@ -1,4 +1,4 @@
-import { ProfileCard } from '@/app/_shared/components/User/UserProfile';
+import { UserProfile } from '@/app/_shared/components/User/UserProfile';
 import { NavMenu } from './NavMenu';
 export const Sidebar = () => {
   return (
@@ -6,7 +6,7 @@ export const Sidebar = () => {
       <h2 className="text-black font-bold ">Couch Surfing Social</h2>
 
       <div className="w-full flex flex-col p-2 gap-4">
-        <ProfileCard />
+        <UserProfile />
         <NavMenu />
       </div>
     </aside>

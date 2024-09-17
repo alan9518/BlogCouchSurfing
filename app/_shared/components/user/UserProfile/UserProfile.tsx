@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { ProfileMetrics } from '../ProfileMetrics';
-export const ProfileCard = () => {
+export const UserProfile = () => {
   return (
     <>
       <div className="flex flex-col items-center  justify-center mb-4">
