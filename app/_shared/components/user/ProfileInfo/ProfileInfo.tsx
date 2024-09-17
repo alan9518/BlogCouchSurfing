@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { ProfileMetrics } from '../ProfileMetrics';
-export const UserProfile = () => {
+export const ProfileInfo = () => {
   return (
     <>
       <div className="flex flex-col items-center  justify-center mb-4">
