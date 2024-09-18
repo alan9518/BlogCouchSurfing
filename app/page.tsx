@@ -1,5 +1,4 @@
 import { Feed } from './_feed/Feed';
-// import { trpc } from './_trpc/client';
 
 import { serverClient } from './_trpc/serverClient';
 
@@ -8,34 +7,19 @@ interface Props {
 }
 
 export default async function Home() {
-  const posts = await serverClient.posts.getPosts.query();
+  const posts = await serverClient.posts.getAllPosts.query();
+  const userPosts = await serverClient.posts.getPostsByUserId.query({
+    userId: 1,
+  });
+
+  const friends = await serverClient.users.getUserFriends.query({ userId: 1 });
+
   console.log('🚀 ~ Home ~ posts:', posts);
 
   return (
     <main className="flex h-full">
-      {posts && JSON.stringify(posts, null, 2)}
+      {posts && JSON.stringify(friends, null, 2)}
       <Feed posts={posts} />
     </main>
   );
 }
-
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   try {
-//     const posts = await serverClient.posts.getPosts.query();
-//     console.log('Fetched posts:', posts); // Log to ensure you see the posts
-
-//     return {
-//       props: {
-//         posts: posts || [], // Ensure the posts are properly passed to props
-//       },
-//     };
-//   } catch (error) {
-//     console.error('Error fetching posts:', error);
-
-//     return {
-//       props: {
-//         posts: [], // Fallback to an empty array on error
-//       },
-//     };
-//   }
-// };
