@@ -1,7 +1,11 @@
-import { appRouter } from '@/server';
-import { createCallerFactory } from '../../server/trpc';
+import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 
-export const createCaller = createCallerFactory(appRouter);
+import { AppRouter } from '../../server/routers/appRouter';
 
-// 2. create a caller using your `Context`
-export const caller = createCaller({});
+export const serverClient = createTRPCProxyClient<AppRouter>({
+  links: [
+    httpBatchLink({
+      url: 'http://localhost:3000/api/trpc',
+    }),
+  ],
+});
