@@ -2,7 +2,7 @@ import {
   ContentTabItem,
   ContentTabs,
 } from '@/app/_shared/components/ContentTabs';
-import { Details } from '@/components/User/Details';
+import { Details } from '@/components/User/Details/';
 
 export default function Profile() {
   const tabsData: ContentTabItem[] = [
