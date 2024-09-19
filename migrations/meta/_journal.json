@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1726685165306,
-      "tag": "0000_free_lizard",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1726701831178,
-      "tag": "0001_tired_human_robot",
+      "when": 1726718025013,
+      "tag": "0000_fearless_the_anarchist",
       "breakpoints": true
     }
   ]
