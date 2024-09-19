@@ -3,9 +3,12 @@ import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 
 export const usersTable = sqliteTable('users', {
   id: integer('id').primaryKey(),
-  first_name: text('first_name').notNull(),
-  last_name: text('last_name').notNull(),
+  firstName: text('first_name').notNull(),
+  lastName: text('last_name').notNull(),
   email: text('email').unique().notNull(),
+  createdAt: text('created_at')
+    .default(sql`(CURRENT_TIMESTAMP)`)
+    .notNull(),
 });
 
 export const postsTable = sqliteTable('posts', {

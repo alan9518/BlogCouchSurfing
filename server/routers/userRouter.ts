@@ -29,9 +29,10 @@ export const userRouter = router({
       const friends = await db
         .select({
           id: usersTable.id,
-          first_name: usersTable.first_name,
-          last_name: usersTable.last_name,
+          firstName: usersTable.firstName,
+          lastName: usersTable.lastName,
           email: usersTable.email,
+          createdAt: usersTable.createdAt,
         })
         .from(usersTable)
         .innerJoin(
