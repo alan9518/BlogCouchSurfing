@@ -2,17 +2,19 @@ import {
   ContentTabItem,
   ContentTabs,
 } from '@/app/_shared/components/ContentTabs';
+import { UserPostsList } from '@/app/_shared/components/Posts/UserPostsList/PostsList';
 import { Details } from '@/components/User/Details';
 
-export default function Profile() {
+export default function Profile({ params }: { params: { id: string } }) {
+  const { id } = params;
   const tabsData: ContentTabItem[] = [
     {
       tabTitle: 'Details',
-      tabContent: <Details />,
+      tabContent: <Details userId={parseInt(id)} />,
     },
     {
       tabTitle: 'Posts',
-      tabContent: 'null',
+      tabContent: <UserPostsList userId={parseInt(id)} />,
     },
   ];
   return (

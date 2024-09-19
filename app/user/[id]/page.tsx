@@ -1,44 +1,18 @@
+import { UserPostsList } from '@/app/_shared/components/Posts/UserPostsList/PostsList';
 import { ContentTabItem, ContentTabs } from '@/components/ContentTabs';
 import { Details } from '@/components/User/Details/';
-// import { DetailsError } from '@/components/User/Details/DetailsError';
-import dynamic from 'next/dynamic';
-import { serverClient } from '../../_trpc/serverClient';
-
-const DetailsError = dynamic(() =>
-  import('@/components/User/Details/DetailsError').then(
-    (mod) => mod.DetailsError
-  )
-);
 
 export default async function Profile({ params }: { params: { id: string } }) {
   const { id } = params;
-  const userDetails = await serverClient.users.getUserById.query({
-    userId: parseInt(id),
-  });
-  console.log('🚀 ~ Profile ~ userDetails:', userDetails);
-
-  const userPosts = await serverClient.posts.getPostsByUserId.query({
-    userId: parseInt(id),
-  });
-  console.log('🚀 ~ Profile ~ userPosts:', userPosts);
 
   const tabsData: ContentTabItem[] = [
     {
       tabTitle: 'Details',
-      tabContent: userDetails ? (
-        <Details
-          firstName={userDetails?.firstName}
-          lastName={userDetails.lastName}
-          email={userDetails.email}
-          dateCreated={userDetails.createdAt}
-        />
-      ) : (
-        <DetailsError />
-      ),
+      tabContent: <Details userId={parseInt(id)} />,
     },
     {
       tabTitle: 'Posts',
-      tabContent: 'null',
+      tabContent: <UserPostsList userId={parseInt(id)} />,
     },
   ];
   return (

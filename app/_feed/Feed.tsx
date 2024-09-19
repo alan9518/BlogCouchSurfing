@@ -11,7 +11,7 @@ export const Feed = ({ feedPosts, friends }: FeedProps) => {
   if (!feedPosts) return 'no posts';
   return (
     <section className="w-full bg-white p-4 overflow-y-auto">
-      <div className="w-2/3 mx-auto my-4">
+      <div className="w-5/6 mx-auto my-4">
         <h2 className="text-2xl font-semibold mt-4">Friends</h2>
         <FriendsList friends={friends} />
 

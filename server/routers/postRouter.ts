@@ -59,8 +59,8 @@ export const postRouter = router({
           createdAt: postsTable.createdAt,
           updateAt: postsTable.updateAt,
           image: postsTable.image,
-          firstName: usersTable.first_name,
-          lastName: usersTable.last_name,
+          firstName: usersTable.firstName,
+          lastName: usersTable.lastName,
         })
         .from(postsTable)
         .innerJoin(usersTable, eq(postsTable.userId, usersTable.id))
