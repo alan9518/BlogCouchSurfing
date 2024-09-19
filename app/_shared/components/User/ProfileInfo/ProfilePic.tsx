@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 interface ProfilePicProps {
-  profileId: string;
+  profileId: number;
   showBorder: boolean;
   size: 'normal' | 'small';
   link: string;

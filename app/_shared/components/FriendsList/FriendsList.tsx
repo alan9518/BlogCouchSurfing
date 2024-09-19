@@ -1,13 +1,17 @@
+import { type SelectUser } from '@/db/schema';
 import { ProfilePic } from '../User/ProfileInfo/ProfilePic';
 
-export const FriendsList = () => {
-  const friends = [1, 2, 3, 4, 5, 6];
+interface FriendsListProps {
+  friends: SelectUser[];
+}
+
+export const FriendsList = ({ friends }: FriendsListProps) => {
   return (
     <section className="flex items-center  rounded-sm w-full p-4 gap-4">
-      {friends.map((fiend) => {
+      {friends.map((friend) => {
         return (
           <ProfilePic
-            profileId="7"
+            profileId={friend.id}
             showBorder={true}
             size="small"
             link="user"

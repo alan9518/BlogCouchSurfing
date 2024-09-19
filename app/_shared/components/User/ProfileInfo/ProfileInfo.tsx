@@ -5,7 +5,7 @@ export const ProfileInfo = () => {
     <>
       <div className="flex flex-col items-center  justify-center mb-4">
         <ProfilePic
-          profileId="2"
+          profileId={1}
           showBorder={true}
           size="normal"
           link="profile"
