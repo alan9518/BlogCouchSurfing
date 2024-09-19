@@ -1,6 +1,6 @@
-import { Feed } from './feed/_Feed/Feed';
+import { Feed } from './_Feed';
 
-import { serverClient } from './_trpc/serverClient';
+import { serverClient } from '../_trpc/serverClient';
 
 export default async function Home() {
   const feedPosts = await serverClient.posts.getFeedPosts.query({
@@ -10,7 +10,7 @@ export default async function Home() {
   const friends = await serverClient.users.getUserFriends.query({ userId: 1 });
 
   return (
-    <main className="flex h-full">
+    <main className="flex h-full pt-12 md:pt-0">
       <Feed feedPosts={feedPosts} friends={friends} />
     </main>
   );

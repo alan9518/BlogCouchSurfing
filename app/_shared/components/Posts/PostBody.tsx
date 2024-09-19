@@ -7,7 +7,6 @@ interface PostBodyProps {
 }
 
 export const PostBody = ({ title, image }: PostBodyProps) => {
-  console.log('🚀 ~ PostBody ~ image:', image);
   return (
     <>
       <Image
@@ -19,7 +18,7 @@ export const PostBody = ({ title, image }: PostBodyProps) => {
         className="rounded-sm"
       />
       <div>
-        <h2 className="text-black font-semibold text-xl">{title}</h2>
+        <h2 className="text-black font-semibold text-xl mt-2">{title}</h2>
       </div>
     </>
   );

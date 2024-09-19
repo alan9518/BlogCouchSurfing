@@ -1,6 +1,7 @@
+import { Sidebar } from '@/components/Sidebar/Sidebar';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import { Sidebar } from './_shared/components/Sidebar/Sidebar';
+import { Navbar } from './_shared/components/Navbar/Navbar';
 import QueryProvider from './_trpc/Provider';
 
 import './globals.css';
@@ -31,10 +32,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-dvh`}
       >
+        <Navbar />
         <QueryProvider>
           <div className="flex h-full">
             <Sidebar />
-
             <div className="w-full bg-white ">{children}</div>
           </div>
         </QueryProvider>
