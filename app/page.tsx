@@ -8,7 +8,7 @@ interface Props {
 
 export default async function Home() {
   const posts = await serverClient.posts.getAllPosts.query();
-  const userPosts = await serverClient.posts.getPostsByUserId.query({
+  const friendsPosts = await serverClient.posts.getFriendsPost.query({
     userId: 1,
   });
 
@@ -18,7 +18,7 @@ export default async function Home() {
 
   return (
     <main className="flex h-full">
-      {posts && JSON.stringify(friends, null, 2)}
+      {posts && JSON.stringify(friendsPosts, null, 2)}
       <Feed posts={posts} />
     </main>
   );
