@@ -1,4 +1,4 @@
-import { serverClient } from '../../../_trpc/serverClient';
+import { serverClient } from '../../../../_trpc/serverClient';
 import { PostDetails } from '../_PostDetails/PostDetails';
 
 export default async function Post({ params }: { params: { id: string } }) {

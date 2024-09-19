@@ -1,6 +1,6 @@
 import { Feed } from './_Feed';
 
-import { serverClient } from '../_trpc/serverClient';
+import { serverClient } from '../../_trpc/serverClient';
 
 interface FeedPageProps {
   searchParams: { userId?: string };

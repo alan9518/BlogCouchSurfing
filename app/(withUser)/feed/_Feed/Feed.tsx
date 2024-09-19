@@ -2,7 +2,7 @@
 import { NoDataMessage } from '@/app/_shared/components/NoDataMessage';
 import { FriendsList } from '@/components/FriendsList';
 import { Post } from '@/components/Posts/Post';
-import { FeedPost } from '../../../types/post'; // Import the Post type
+import { FeedPost } from '../../../../types/post'; // Import the Post type
 
 interface FeedProps {
   feedPosts: FeedPost[];
