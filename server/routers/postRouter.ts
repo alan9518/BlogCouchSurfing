@@ -1,5 +1,11 @@
 import { db } from '@/db';
-import { friendshipsTable, postsTable, type SelectPost } from '@/db/schema';
+import {
+  friendshipsTable,
+  postsTable,
+  usersTable,
+  type SelectPost,
+} from '@/db/schema';
+import { FeedPost } from '@/types/post';
 import { eq, inArray } from 'drizzle-orm';
 import { z } from 'zod';
 import { publicProcedure, router } from '../trpc';
@@ -21,13 +27,13 @@ export const postRouter = router({
       });
       return posts;
     }),
-  getFriendsPost: publicProcedure
+  getFeedPosts: publicProcedure
     .input(
       z.object({
         userId: z.number(),
       })
     )
-    .query(async ({ input }): Promise<SelectPost[]> => {
+    .query(async ({ input }): Promise<FeedPost[]> => {
       const { userId } = input;
 
       const friends = await db
@@ -40,7 +46,6 @@ export const postRouter = router({
       const friendIds = friends.map((friend) => friend.friendId);
 
       if (friendIds.length === 0) {
-        // No friends found
         return [];
       }
 
@@ -53,11 +58,29 @@ export const postRouter = router({
           userId: postsTable.userId,
           createdAt: postsTable.createdAt,
           updateAt: postsTable.updateAt,
+          image: postsTable.image,
+          firstName: usersTable.first_name,
+          lastName: usersTable.last_name,
         })
         .from(postsTable)
+        .innerJoin(usersTable, eq(postsTable.userId, usersTable.id))
         .where(inArray(postsTable.userId, friendIds));
 
-      return posts;
+      // format dates
+      if (!posts) return [];
+
+      return posts.map((post) => ({
+        ...post,
+        createdAt: new Date(post.createdAt)
+          .toISOString()
+          .split('T')[0]
+          .replace(/-/g, '/'),
+        userName: `${post.firstName} ${post.lastName}`,
+        // updateAt: new Date(post.updateAt)
+        //   .toISOString()
+        //   .split('T')[0]
+        //   .replace(/-/g, '/'),
+      }));
     }),
 });
 
