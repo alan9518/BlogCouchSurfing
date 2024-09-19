@@ -1,8 +1,5 @@
-import {
-  ContentTabItem,
-  ContentTabs,
-} from '@/app/_shared/components/ContentTabs';
-import { UserPostsList } from '@/app/_shared/components/Posts/UserPostsList/PostsList';
+import { ContentTabItem, ContentTabs } from '@/components/ContentTabs';
+import { UserPostsList } from '@/components/Posts/UserPostsList';
 import { Details } from '@/components/User/Details';
 
 export default function Profile({ params }: { params: { id: string } }) {

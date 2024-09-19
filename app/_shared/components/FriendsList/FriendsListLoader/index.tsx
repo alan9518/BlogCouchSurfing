@@ -1,0 +1,1 @@
+export { FriendsListLoader } from './FriendsListLoader';

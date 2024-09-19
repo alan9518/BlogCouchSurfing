@@ -20,16 +20,16 @@ export const PostDetails = ({
         style={{ background: `url(${image})` }}
       ></div>
       <h2 className="text-2xl font-semibold mt-4">{title}</h2>
-      <div className="flex items-center justify-start">
+      <div className="flex items-center justify-start gap-4">
         <span className="capitalize  text-gray-500 font-light">
           by {author}
         </span>
         <span className="capitalize  text-gray-500 font-light">
-          pulished on {createdDate}
+          published on {createdDate}
         </span>
       </div>
 
-      <p className="line">{content}</p>
+      <p>{content}</p>
     </section>
   );
 };
