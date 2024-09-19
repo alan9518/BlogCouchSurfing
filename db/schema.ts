@@ -21,6 +21,7 @@ export const postsTable = sqliteTable('posts', {
   updateAt: integer('updated_at', { mode: 'timestamp' }).$onUpdate(
     () => new Date()
   ),
+  image: text('image').notNull(),
 });
 
 export const friendshipsTable = sqliteTable('friendships', {
@@ -39,8 +40,6 @@ export const friendshipsTable = sqliteTable('friendships', {
   ),
 });
 
-// export type InsertUser = typeof usersTable.$inferInsert;
 export type SelectUser = typeof usersTable.$inferSelect;
 export type SelectPost = typeof postsTable.$inferSelect;
 export type SelectFriendships = typeof friendshipsTable.$inferSelect;
-// export type InsertPost = typeof postsTable.$inferInsert;
