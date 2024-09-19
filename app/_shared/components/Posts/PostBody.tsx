@@ -11,14 +11,12 @@ export const PostBody = ({ title, image }: PostBodyProps) => {
   return (
     <>
       <Image
-        // src={'/posts/images/post_1.jpg'}
         src={image}
         alt="post image"
         layout="responsive"
         width={500}
         height={300}
         className="rounded-sm"
-        placeholder="blur"
       />
       <div>
         <h2 className="text-black font-semibold text-xl">{title}</h2>
