@@ -20,12 +20,32 @@ export const postRouter = router({
         userId: z.number(),
       })
     )
-    .query(async ({ input }): Promise<SelectPost[]> => {
+    .query(async ({ input }): Promise<FeedPost[]> => {
       const { userId } = input;
-      const posts = await db.query.postsTable.findMany({
-        where: (posts, { eq }) => eq(posts.userId, userId),
-      });
-      return posts;
+      const posts = await db
+        .select({
+          id: postsTable.id,
+          title: postsTable.title,
+          content: postsTable.content,
+          userId: postsTable.userId,
+          createdAt: postsTable.createdAt,
+          updateAt: postsTable.updateAt,
+          image: postsTable.image,
+          firstName: usersTable.firstName,
+          lastName: usersTable.lastName,
+        })
+        .from(postsTable)
+        .innerJoin(usersTable, eq(postsTable.userId, usersTable.id))
+        .where(eq(postsTable.userId, userId));
+
+      return posts.map((post) => ({
+        ...post,
+        createdAt: new Date(post.createdAt)
+          .toISOString()
+          .split('T')[0]
+          .replace(/-/g, '/'),
+        userName: `${post.firstName} ${post.lastName}`,
+      }));
     }),
   getFeedPosts: publicProcedure
     .input(
@@ -49,7 +69,6 @@ export const postRouter = router({
         return [];
       }
 
-      // Find posts from those friends
       const posts = await db
         .select({
           id: postsTable.id,
@@ -66,7 +85,6 @@ export const postRouter = router({
         .innerJoin(usersTable, eq(postsTable.userId, usersTable.id))
         .where(inArray(postsTable.userId, friendIds));
 
-      // format dates
       if (!posts) return [];
 
       return posts.map((post) => ({
@@ -76,11 +94,52 @@ export const postRouter = router({
           .split('T')[0]
           .replace(/-/g, '/'),
         userName: `${post.firstName} ${post.lastName}`,
-        // updateAt: new Date(post.updateAt)
-        //   .toISOString()
-        //   .split('T')[0]
-        //   .replace(/-/g, '/'),
       }));
+    }),
+  getPostDetailsById: publicProcedure
+    .input(
+      z.object({
+        postId: z.number(),
+      })
+    )
+    .query(async ({ input }): Promise<FeedPost | null> => {
+      const { postId } = input;
+
+      const post = await db
+        .select({
+          id: postsTable.id,
+          title: postsTable.title,
+          content: postsTable.content,
+          userId: postsTable.userId,
+          createdAt: postsTable.createdAt,
+          updateAt: postsTable.updateAt,
+          image: postsTable.image,
+          firstName: usersTable.firstName,
+          lastName: usersTable.lastName,
+        })
+        .from(postsTable)
+        .innerJoin(usersTable, eq(postsTable.userId, usersTable.id))
+        .where(eq(postsTable.id, postId))
+        .limit(1);
+
+      if (post.length === 0) return null;
+
+      // Extract the single post from the result
+      const posToFormat = post[0];
+
+      return {
+        id: posToFormat.id,
+        title: posToFormat.title,
+        content: posToFormat.content,
+        userId: posToFormat.userId,
+        createdAt: new Date(posToFormat.createdAt)
+          .toISOString()
+          .split('T')[0]
+          .replace(/-/g, '/'),
+
+        image: posToFormat.image,
+        userName: `${posToFormat.firstName} ${posToFormat.lastName}`,
+      };
     }),
 });
 

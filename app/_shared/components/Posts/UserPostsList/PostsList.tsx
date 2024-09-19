@@ -30,7 +30,7 @@ export const UserPostsList = ({ userId }: UserPostsListProps) => {
             content={post.content}
             id={post.id}
             image={post.image}
-            userName={'post.userName'}
+            userName={post.userName}
           />
         );
       })}

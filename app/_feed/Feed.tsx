@@ -27,6 +27,7 @@ export const Feed = ({ feedPosts, friends }: FeedProps) => {
                 id={post.id}
                 image={post.image}
                 userName={post.userName}
+                userId={post.userId}
               />
             );
           })}

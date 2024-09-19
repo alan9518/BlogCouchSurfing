@@ -2,10 +2,6 @@ import { Feed } from './_feed/Feed';
 
 import { serverClient } from './_trpc/serverClient';
 
-interface Props {
-  posts: Array<{ postid: number; title: string }>;
-}
-
 export default async function Home() {
   const feedPosts = await serverClient.posts.getFeedPosts.query({
     userId: 1,

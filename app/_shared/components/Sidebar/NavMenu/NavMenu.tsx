@@ -27,7 +27,7 @@ export const NavMenu = () => {
       <NavItem label="Feed" link="/" isActive={pathName === '/'} />
       <NavItem
         label="My Profile"
-        link="/profile/2"
+        link="/profile/1"
         isActive={pathName.includes('profile')}
       />
     </ul>
