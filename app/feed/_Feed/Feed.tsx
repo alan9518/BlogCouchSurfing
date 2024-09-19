@@ -1,7 +1,8 @@
 'use client';
+import { NoDataMessage } from '@/app/_shared/components/NoDataMessage';
+import { FriendsList } from '@/components/FriendsList';
+import { Post } from '@/components/Posts/Post';
 import { FeedPost } from '../../../types/post'; // Import the Post type
-import { FriendsList } from '../../_shared/components/FriendsList';
-import { Post } from '../../_shared/components/Posts/Post';
 
 interface FeedProps {
   feedPosts: FeedPost[];
@@ -10,7 +11,7 @@ interface FeedProps {
 
 export const Feed = ({ feedPosts, friends }: FeedProps) => {
   console.log('🚀 ~ Feed ~ feedPosts:', feedPosts);
-  if (!feedPosts) return 'no posts';
+  if (!feedPosts) return <NoDataMessage message="No Posts to show" />;
   return (
     <section className="w-full bg-white p-4 overflow-y-auto">
       <div className="w-full  md:w-5/6 mx-auto my-4">

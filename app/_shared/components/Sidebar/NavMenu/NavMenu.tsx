@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 const NavItem = ({
   label,
@@ -21,13 +21,15 @@ const NavItem = ({
 };
 export const NavMenu = () => {
   const pathName = usePathname();
+  const searchParams = useSearchParams();
+  const userId = searchParams.get('userId');
 
   return (
     <ul className="flex flex-col p-2 gap-2">
-      <NavItem label="Feed" link="/" isActive={pathName === '/'} />
+      <NavItem label="Feed" link="/feed" isActive={pathName === '/'} />
       <NavItem
         label="My Profile"
-        link="/profile/1"
+        link={`profile/${userId}`}
         isActive={pathName.includes('profile')}
       />
     </ul>
