@@ -1,0 +1,36 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "TRPC",
+  "steps": [
+    {
+      "file": "server/trpc.ts",
+      "description": "Create TRPC instance",
+      "line": 3
+    },
+    {
+      "file": "app/_trpc/client.ts",
+      "description": "Create TRPC client to work on client side with react query",
+      "line": 3
+    },
+    {
+      "file": "app/_trpc/serverClient.ts",
+      "description": "Create TRPC server side client, to work with server side props",
+      "line": 5
+    },
+    {
+      "file": "app/_trpc/Provider.tsx",
+      "description": "Create Provider to connect TRPC client with react query",
+      "line": 16
+    },
+    {
+      "file": "app/api/trpc/[trpc]/route.ts",
+      "description": "Create api route handler, all TRPC requests will pass trough here ",
+      "line": 5
+    },
+    {
+      "file": "app/layout.tsx",
+      "description": "Wrap application with react query TRPC provider",
+      "line": 33
+    }
+  ]
+}

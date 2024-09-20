@@ -16,11 +16,6 @@
       "file": "db/schema.ts",
       "description": "after a schema modification, we have to run the next commands:\nnpx drizzle-kit generate\nnpx drizzle-kit migrate\nnpx drizzle-kit push // will send the schema changes to the remote DB",
       "line": 50
-    },
-    {
-      "file": "server/trpc.ts",
-      "description": "Create TRPC instance",
-      "line": 3
     }
   ]
 }
