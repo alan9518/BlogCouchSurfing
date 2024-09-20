@@ -36,6 +36,7 @@
     "implicit-arrow-linebreak": "off",
     "nonblock-statement-body-position": "off",
     "curly": "off",
-    "react/jsx-one-expression-per-line": "off"
+    "react/jsx-one-expression-per-line": "off",
+    "object-curly-newline": "off"
   }
 }
