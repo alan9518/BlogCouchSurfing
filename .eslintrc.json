@@ -37,6 +37,7 @@
     "nonblock-statement-body-position": "off",
     "curly": "off",
     "react/jsx-one-expression-per-line": "off",
-    "object-curly-newline": "off"
+    "object-curly-newline": "off",
+    "operator-linebreak": "off"
   }
 }

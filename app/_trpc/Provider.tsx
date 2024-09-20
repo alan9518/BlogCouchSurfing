@@ -6,6 +6,8 @@ import { useState } from 'react';
 
 import { trpc } from './client';
 
+const URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+
 export default function QueryProvider({
   children,
 }: {
@@ -16,7 +18,7 @@ export default function QueryProvider({
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: 'http://localhost:3000/api/trpc',
+          url: URL,
         }),
       ],
     })
