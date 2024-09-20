@@ -7,6 +7,14 @@ User can also see each posts details and other users profiles.
 
 The website is deployed using netlify here: (https://legendary-valkyrie-510089.netlify.app/)
 
+## users
+
+The app has 3 users,but alanmedina@test.com is the one with friendships and can see other users posts the feed
+
+email: alanmedina@test.com pass: password
+email: edoTest@test.com pass: password
+email: demoTest@test.com pass: password
+
 ## Getting Started
 
 Next version : 14.2 (using App Router)
