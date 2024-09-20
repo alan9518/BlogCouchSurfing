@@ -9,6 +9,7 @@ export const usersTable = sqliteTable('users', {
   createdAt: text('created_at')
     .default(sql`(CURRENT_TIMESTAMP)`)
     .notNull(),
+  password: text('password').notNull(),
 });
 
 export const postsTable = sqliteTable('posts', {

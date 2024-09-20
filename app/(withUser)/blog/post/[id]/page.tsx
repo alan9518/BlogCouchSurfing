@@ -5,9 +5,8 @@ export default async function Post({ params }: { params: { id: string } }) {
   const { id } = params;
 
   const postDetailsData = await serverClient.posts.getPostDetailsById.query({
-    postId: parseInt(id),
+    postId: parseInt(id, 10),
   });
-  console.log('🚀 ~ Post ~ postDetailsData:', postDetailsData);
 
   return (
     <section className="w-full bg-white p-4 overflow-y-auto">

@@ -1,6 +1,7 @@
 'use client';
-import { trpc } from '@/app/_trpc/client';
+
 import dynamic from 'next/dynamic';
+import { trpc } from '@/app/_trpc/client';
 
 interface DetailsProps {
   userId: number;
@@ -17,37 +18,33 @@ const DetailsError = dynamic(() =>
   )
 );
 
-const DetailsItemloader = () => {
-  return (
-    <div className="flex gap-2">
-      <div
-        className="animate-pulse bg-gray-200 rounded"
-        style={{ width: 100, height: 10, borderRadius: '4px' }}
-      />
+const DetailsItemloader = () => (
+  <div className="flex gap-2">
+    <div
+      className="animate-pulse bg-gray-200 rounded"
+      style={{ width: 100, height: 10, borderRadius: '4px' }}
+    />
 
-      <div
-        className="animate-pulse bg-gray-200 rounded"
-        style={{ width: 100, height: 10, borderRadius: '4px' }}
-      />
-    </div>
-  );
-};
+    <div
+      className="animate-pulse bg-gray-200 rounded"
+      style={{ width: 100, height: 10, borderRadius: '4px' }}
+    />
+  </div>
+);
 
-const DetailsItem = ({ detailLabel, detailData }: DetailsItemProps) => {
-  return (
-    <li>
-      <span className="text-black font-semibold"> {detailLabel} </span>
-      <span className="text-gray-600">{detailData}</span>
-    </li>
-  );
-};
+const DetailsItem = ({ detailLabel, detailData }: DetailsItemProps) => (
+  <li>
+    <span className="text-black font-semibold"> {detailLabel} </span>
+    <span className="text-gray-600">{detailData}</span>
+  </li>
+);
 
 export const Details = ({ userId }: DetailsProps) => {
   const {
     data: userDetails,
     isError,
     isLoading,
-  } = trpc.users.getUserById.useQuery({ userId: userId });
+  } = trpc.users.getUserById.useQuery({ userId });
 
   if (isError) return <DetailsError />;
 

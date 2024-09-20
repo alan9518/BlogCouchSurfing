@@ -9,7 +9,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'media.dev.to',
+        hostname: 'miro.medium.com',
         port: '',
       },
     ],

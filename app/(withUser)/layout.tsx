@@ -2,6 +2,7 @@ import { Navbar } from '@/components/Navbar/Navbar';
 import { Sidebar } from '@/components/Sidebar/Sidebar';
 import type { Metadata } from 'next';
 
+import { Suspense } from 'react';
 import '../globals.css';
 
 export const metadata: Metadata = {
@@ -15,15 +16,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="h-dvh overflow-hidden">
+    <div className="h-dvh overflow-hidden">
+      <Suspense>
         <Navbar />
+      </Suspense>
 
-        <div className="flex h-full">
-          <Sidebar />
-          <div className="w-full bg-white ">{children}</div>
-        </div>
-      </body>
-    </html>
+      <div className="flex h-full">
+        <Sidebar />
+        <div className="w-full bg-white ">{children}</div>
+      </div>
+    </div>
   );
 }

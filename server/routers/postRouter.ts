@@ -1,3 +1,5 @@
+import { eq, inArray } from 'drizzle-orm';
+import { z } from 'zod';
 import { db } from '@/db';
 import {
   friendshipsTable,
@@ -6,14 +8,12 @@ import {
   type SelectPost,
 } from '@/db/schema';
 import { FeedPost } from '@/types/post';
-import { eq, inArray } from 'drizzle-orm';
-import { z } from 'zod';
 import { publicProcedure, router } from '../trpc';
 
 export const postRouter = router({
-  getAllPosts: publicProcedure.query(async (): Promise<SelectPost[]> => {
-    return await db.query.postsTable.findMany();
-  }),
+  getAllPosts: publicProcedure.query(
+    async (): Promise<SelectPost[]> => db.query.postsTable.findMany()
+  ),
   getPostsByUserId: publicProcedure
     .input(
       z.object({

@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lint:autofix": "npx eslint . --fix",
     "prepare": "husky install",
     "prettier": "prettier --write  **/*.{js,jsx,ts,tsx}"
   },
@@ -21,6 +22,7 @@
     "@trpc/client": "^10.45.2",
     "@trpc/react-query": "^10.45.2",
     "@trpc/server": "^10.45.2",
+    "cookie": "^0.6.0",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.33.0",
     "next": "14.2.11",
@@ -30,20 +32,22 @@
     "react-skeleton-generator": "^1.1.3",
     "react-tabs": "^6.0.2",
     "ts-node": "^10.9.2",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "drizzle-kit": "^0.24.2"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx,json,css,md}": "prettier --write"
   },
   "devDependencies": {
+    "@types/cookie": "^0.6.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "drizzle-kit": "^0.24.2",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-next": "14.2.11",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.3",
     "eslint-plugin-import": "^2.30.0",
     "eslint-plugin-jsx-a11y": "^6.10.0",
     "eslint-plugin-prettier": "^5.2.1",

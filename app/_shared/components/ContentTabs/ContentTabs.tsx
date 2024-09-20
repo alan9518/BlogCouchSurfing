@@ -1,5 +1,6 @@
 'use client';
-import { useMemo, useState } from 'react';
+
+import { useState } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
 export type ContentTabItem = {
@@ -8,32 +9,25 @@ export type ContentTabItem = {
 };
 type ContentTabsProps = {
   tabsData: ContentTabItem[];
-  onSelectCallback?: (tabIndex: number) => void;
 };
 
-export const ContentTabs = ({
-  tabsData,
-  onSelectCallback,
-}: ContentTabsProps) => {
-  const tabsHeaders = useMemo(
-    () => tabsData.map((tabItem: ContentTabItem) => tabItem.tabTitle),
-    tabsData
+export const ContentTabs = ({ tabsData }: ContentTabsProps) => {
+  const tabsHeaders = tabsData.map(
+    (tabItem: ContentTabItem) => tabItem.tabTitle
   );
-  const tabsPanels = useMemo(
-    () => tabsData.map((tabItem: ContentTabItem) => tabItem.tabContent),
-    tabsData
+  const tabsPanels = tabsData.map(
+    (tabItem: ContentTabItem) => tabItem.tabContent
   );
   const [tabIndex, setTabIndex] = useState<number>(0);
 
   const onSelectTab = (index: number) => {
     setTabIndex(index);
-    if (onSelectCallback) onSelectCallback(index);
   };
 
   if (!tabsHeaders || !tabsPanels) return null;
 
   return (
-    <Tabs selectedIndex={tabIndex} onSelect={onSelectTab} className={'w-full'}>
+    <Tabs selectedIndex={tabIndex} onSelect={onSelectTab} className="w-full">
       <TabList className="p-x-2 flex w-full justify-start space-x-2 border-b border-solid border-greyBorder">
         {tabsHeaders.map((tabHeader, index) => (
           <Tab

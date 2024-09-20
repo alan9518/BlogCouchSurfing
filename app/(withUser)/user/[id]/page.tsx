@@ -8,11 +8,11 @@ export default async function Profile({ params }: { params: { id: string } }) {
   const tabsData: ContentTabItem[] = [
     {
       tabTitle: 'Details',
-      tabContent: <Details userId={parseInt(id)} />,
+      tabContent: <Details userId={parseInt(id, 10)} />,
     },
     {
       tabTitle: 'Posts',
-      tabContent: <UserPostsList userId={parseInt(id)} />,
+      tabContent: <UserPostsList userId={parseInt(id, 10)} />,
     },
   ];
   return (

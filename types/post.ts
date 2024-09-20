@@ -1,9 +1,8 @@
-export type FeedPost = {
-  id: number;
-  title: string;
-  content: string;
-  userId: number;
-  createdAt: string;
-  image: string;
+import { type SelectPost } from '@/db/schema';
+
+export type FeedPost = Omit<
+  SelectPost,
+  'firstName' | 'lastName' | 'updateAt'
+> & {
   userName: string;
 };

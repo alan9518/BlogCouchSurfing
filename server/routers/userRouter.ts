@@ -1,5 +1,6 @@
 import { db } from '@/db';
 import { friendshipsTable, usersTable, type SelectUser } from '@/db/schema';
+import { UserFriends } from '@/types/users';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 import { publicProcedure, router } from '../trpc';
@@ -24,7 +25,7 @@ export const userRouter = router({
     }),
   getUserFriends: publicProcedure
     .input(z.object({ userId: z.number() }))
-    .query(async ({ input }): Promise<SelectUser[] | null> => {
+    .query(async ({ input }): Promise<UserFriends[]> => {
       const { userId } = input;
       const friends = await db
         .select({
@@ -41,6 +42,6 @@ export const userRouter = router({
         )
         .where(eq(friendshipsTable.userId, userId));
 
-      return friends || null;
+      return friends || [];
     }),
 });
