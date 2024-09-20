@@ -1,10 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Couch surfing Blog
+
+This project creates a small blog page with a really simple login page
+once a user is authenticated it can see friends's posts on Feed page, there is also My profile page where the user can see their profile basic information and published posts.
+
+User can also see each posts details and other users profiles.
+
+The website is deployed using netlify here: (https://legendary-valkyrie-510089.netlify.app/)
 
 ## Getting Started
 
-First, run the development server:
+Next version : 14.2 (using App Router)
+
+Node version: v18.17.0
+
+Run the development server:
 
 ```bash
+nvm use # will load the node version from the .nvmrc file if you are using nvm
+
+npm run prepare # will setup husky in the project to allow the use git hooks
+
 npm run dev
 # or
 yarn dev
@@ -14,23 +29,40 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project is built using TRPC to communicate front end and backend.
 
-## Learn More
+I choose TRPC because of the End-to-End type safety
 
-To learn more about Next.js, take a look at the following resources:
+And once you finish the initial boilerplate is really fast to add more endpoint.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The combination with react query makes it really easy to fetch data on client side and manage loading and error state.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Since I'm using App Router from NextJS there's no explicit definition of **getServerSideProps** and **getStaticProps** this version of next manages this functions directly in the page implicitly.
 
-## Deploy on Vercel
+Since the blog posts that show on the feed depends on user friendships I'm not generating all the blogs pages statically, it would be the best option to reduce server side work on request, but it require more time to complete.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## DB
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+I'm using Turso as a remote db connection and host and drizzle for ORM. Its a simple database to handle posts, users and friendships.
+
+![alt text](image-1.png)
+
+the ids are integer to make it simple to get dummy user images and posts, however UUIDs would be a way better option to mange Ids.
+
+The db data is the **db** folder, here is the definition of schema and connection with turso. the keys are not in the .env file, I send them over email.
+
+## Auth
+
+I wanted to implement a simple auth system using TRPC and **http-only-cookies** to communicate the front and backend , however using **fetchRequestHandler** made it more difficult because it didn't allow to attach the cookie in the response of the login request therefore I wasn't able to share the cookie in TRCP request context in the routers.
+
+The current solution to manage the cookie with the user ID is far from optimal, I'm aware of that, but by the time I realized the **fetchRequestHandler** it was too late to redo the TRCP route strategy to use something more designed for nextjs instead, it would have take another day to redo this part. Just for now the auth flow works creating a normal cookie with the user id, and reading that cookie on client side.
+
+With a bit more time I would have used a library like next-auth to handle authentication is a far more robust solution and can be connected with TRPC.
+
+## Code Flow
+
+I'm using the VS code plugin CODE TOUR to make tours of the flow of the application, you can record each step on a specific flow, like setting up the TRPC communication. IF you install this extension (https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour) you can check the flows that work as code and flows documentation. The extension will find the tours recorded and will give a step by step tour of the solution.
