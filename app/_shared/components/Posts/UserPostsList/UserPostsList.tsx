@@ -31,7 +31,7 @@ export const UserPostsList = ({ userId }: UserPostsListProps) => {
         return (
           <Post
             key={`post-${post.id}`}
-            userId={post.id}
+            userId={post.userId}
             createdDate={post.createdAt}
             title={post.title}
             content={post.content}

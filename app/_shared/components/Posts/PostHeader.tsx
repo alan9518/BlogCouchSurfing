@@ -12,7 +12,7 @@ export const PostHeader = ({
   createdDate,
   userId,
 }: PostTitleProps) => {
-  const profileLink = `user/${userId}`;
+  const profileLink = `/user/${userId}`;
   return (
     <Link href={profileLink} className="w-full">
       <div className="flex items-center justify-start py-1 gap-2">

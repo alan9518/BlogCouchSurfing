@@ -1,7 +1,6 @@
 'use client';
 import { trpc } from '@/app/_trpc/client';
 import { useSearchParams } from 'next/navigation';
-import { ProfileMetrics } from '../ProfileMetrics';
 import { ProfileInfoLoader } from './ProfileInfoLoader';
 import { ProfilePic } from './ProfilePic';
 
@@ -35,7 +34,7 @@ export const ProfileInfo = () => {
         <span className="text-gray-500 text-sm"> {profileInfo?.email} </span>
       </div>
 
-      <ProfileMetrics />
+      {/* <ProfileMetrics /> */}
     </>
   );
 };
