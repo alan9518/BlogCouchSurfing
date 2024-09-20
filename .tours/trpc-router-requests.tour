@@ -1,0 +1,36 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "TRPC Router requests",
+  "steps": [
+    {
+      "file": "server/routers/appRouter.ts",
+      "description": "Main router definition",
+      "line": 7
+    },
+    {
+      "file": "server/routers/authRouter.ts",
+      "description": "auth router, hadle login",
+      "line": 21
+    },
+    {
+      "file": "server/routers/userRouter.ts",
+      "description": "user router, get users and friendships",
+      "line": 9
+    },
+    {
+      "file": "server/routers/postRouter.ts",
+      "description": "posts router",
+      "line": 56
+    },
+    {
+      "file": "app/(withUser)/feed/page.tsx",
+      "description": "Iniital page after login, fetch posts and friend with routers using server side",
+      "line": 13
+    },
+    {
+      "file": "app/_shared/components/ProfileUser/Details/Details.tsx",
+      "description": "Profile details info, fetch data using router and react query client TRPC",
+      "line": 43
+    }
+  ]
+}
