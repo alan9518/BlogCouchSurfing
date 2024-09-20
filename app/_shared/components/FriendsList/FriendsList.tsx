@@ -1,5 +1,5 @@
 import { UserFriends } from '@/types/users';
-import { ProfilePic } from '../User/ProfileInfo/ProfilePic';
+import { ProfilePic } from '../ProfileUser/ProfileInfo/ProfilePic';
 
 interface FriendsListProps {
   friends: UserFriends[];

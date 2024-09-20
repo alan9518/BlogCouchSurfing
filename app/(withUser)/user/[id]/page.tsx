@@ -1,6 +1,6 @@
+import { Details } from '@/app/_shared/components/ProfileUser/Details';
 import { ContentTabItem, ContentTabs } from '@/components/ContentTabs';
 import { UserPostsList } from '@/components/Posts/UserPostsList';
-import { Details } from '@/components/User/Details/';
 
 export default async function Profile({ params }: { params: { id: string } }) {
   const { id } = params;

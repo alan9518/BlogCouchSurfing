@@ -1,7 +1,7 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { trpc } from '@/app/_trpc/client';
+import dynamic from 'next/dynamic';
 
 interface DetailsProps {
   userId: number;
@@ -13,7 +13,7 @@ interface DetailsItemProps {
 }
 
 const DetailsError = dynamic(() =>
-  import('@/components/User/Details/DetailsError').then(
+  import('@/app/_shared/components/ProfileUser/Details/DetailsError').then(
     (mod) => mod.DetailsError
   )
 );

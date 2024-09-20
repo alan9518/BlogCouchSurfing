@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { ProfileInfo } from '../User/ProfileInfo';
+import { ProfileInfo } from '../ProfileUser/ProfileInfo';
 import { NavMenu } from './NavMenu';
 
 export const Sidebar = () => (
