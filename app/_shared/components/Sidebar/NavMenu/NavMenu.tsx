@@ -1,6 +1,7 @@
 'use client';
 
-import { deleteCookie, getCookie } from '@/app/_shared/lib/cookie';
+import { getCookie } from '@/app/_shared/lib/cookie';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -29,25 +30,23 @@ export const NavMenu = () => {
   const pathName = usePathname();
   if (typeof document === 'undefined') return null;
   const currentUserIdFromCookies = getCookie('userId');
-  const onLogoutClick = () => deleteCookie('userId');
+  const onLogoutClick = () => {
+    signOut();
+  };
 
   return (
     <ul className="flex flex-col p-2 gap-2">
-      <NavItem
-        label="Feed"
-        link={`/feed?userId=${currentUserIdFromCookies}`}
-        isActive={pathName === '/'}
-      />
+      <NavItem label="Feed" link="feed" isActive={pathName === '/'} />
       <NavItem
         label="My Profile"
-        link={`/profile/${currentUserIdFromCookies}`}
+        link="/profile"
         isActive={pathName.includes('profile')}
       />
       <NavItem
         label="Log Out"
         link="/"
         onClick={onLogoutClick}
-        isActive={pathName.includes('profile')}
+        isActive={false}
       />
     </ul>
   );

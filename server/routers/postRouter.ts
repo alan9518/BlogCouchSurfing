@@ -1,5 +1,3 @@
-import { eq, inArray } from 'drizzle-orm';
-import { z } from 'zod';
 import { db } from '@/db';
 import {
   friendshipsTable,
@@ -8,7 +6,16 @@ import {
   type SelectPost,
 } from '@/db/schema';
 import { FeedPost } from '@/types/post';
+import { eq, inArray } from 'drizzle-orm';
+import { z } from 'zod';
 import { publicProcedure, router } from '../trpc';
+
+const userSchema = z.object({
+  id: z.string(), // Use string since NextAuth session id is a string
+  name: z.string().nullable().optional(),
+  email: z.string().email().nullable().optional(),
+  image: z.string().nullable().optional(),
+});
 
 export const postRouter = router({
   getAllPosts: publicProcedure.query(
@@ -17,11 +24,11 @@ export const postRouter = router({
   getPostsByUserId: publicProcedure
     .input(
       z.object({
-        userId: z.number(),
+        user: userSchema,
       })
     )
     .query(async ({ input }): Promise<FeedPost[]> => {
-      const { userId } = input;
+      const { user } = input;
       const posts = await db
         .select({
           id: postsTable.id,
@@ -36,7 +43,7 @@ export const postRouter = router({
         })
         .from(postsTable)
         .innerJoin(usersTable, eq(postsTable.userId, usersTable.id))
-        .where(eq(postsTable.userId, userId));
+        .where(eq(postsTable.userId, parseInt(user.id, 10)));
 
       return posts.map((post) => ({
         ...post,
@@ -50,18 +57,18 @@ export const postRouter = router({
   getFeedPosts: publicProcedure
     .input(
       z.object({
-        userId: z.number(),
+        user: userSchema,
       })
     )
     .query(async ({ input }): Promise<FeedPost[]> => {
-      const { userId } = input;
+      const { user } = input;
 
       const friends = await db
         .select({
           friendId: friendshipsTable.friendId,
         })
         .from(friendshipsTable)
-        .where(eq(friendshipsTable.userId, userId));
+        .where(eq(friendshipsTable.userId, parseInt(user.id, 10)));
 
       const friendIds = friends.map((friend) => friend.friendId);
 
@@ -99,11 +106,11 @@ export const postRouter = router({
   getPostDetailsById: publicProcedure
     .input(
       z.object({
-        postId: z.number(),
+        user: userSchema,
       })
     )
     .query(async ({ input }): Promise<FeedPost | null> => {
-      const { postId } = input;
+      const { user } = input;
 
       const post = await db
         .select({
@@ -119,7 +126,7 @@ export const postRouter = router({
         })
         .from(postsTable)
         .innerJoin(usersTable, eq(postsTable.userId, usersTable.id))
-        .where(eq(postsTable.id, postId))
+        .where(eq(postsTable.id, parseInt(user.id, 10)))
         .limit(1);
 
       if (post.length === 0) return null;

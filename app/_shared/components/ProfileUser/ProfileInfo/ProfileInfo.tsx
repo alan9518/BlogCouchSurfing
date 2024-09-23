@@ -1,27 +1,19 @@
-'use client';
+import { AuthOptions } from '@/app/_shared/lib/authOptions';
+import { serverClient } from '@/app/_trpc/serverClient';
+import { getServerSession } from 'next-auth';
 
-import { useSearchParams } from 'next/navigation';
-import { trpc } from '@/app/_trpc/client';
-import { ProfileInfoLoader } from './ProfileInfoLoader';
 import { ProfilePic } from './ProfilePic';
 
-export const ProfileInfo = () => {
-  const searchParams = useSearchParams();
-  const userId = searchParams.get('userId');
-  const {
-    data: profileInfo,
-    isLoading,
-    isError,
-  } = trpc.users.getUserById.useQuery({
-    userId: userId ? parseInt(userId, 10) : 1,
+export const ProfileInfo = async () => {
+  const session = await getServerSession(AuthOptions);
+
+  const profileInfo = await serverClient.users.getUserById.query({
+    user: session.user,
   });
 
-  if (isError) return null;
-
-  if (isLoading) return <ProfileInfoLoader />;
-
+  // Render the profile information
   return (
-    <div className="flex flex-col items-center  justify-center mb-4">
+    <div className="flex flex-col items-center justify-center mb-4">
       <ProfilePic
         profileId={profileInfo?.id || 1}
         showBorder

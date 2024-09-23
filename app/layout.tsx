@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import QueryProvider from './_trpc/Provider';
 
+import { SessionWrapper } from './_shared/components/Auth/SessionWrapper';
 import './globals.css';
 
 const geistSans = localFont({
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   description: '',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -30,11 +31,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-dvh`}
       >
-        <QueryProvider>
-          <div className="flex h-full">
-            <div className="w-full bg-white ">{children}</div>
-          </div>
-        </QueryProvider>
+        <SessionWrapper>
+          <QueryProvider>
+            <div className="flex h-full">
+              <div className="w-full bg-white ">{children}</div>
+            </div>
+          </QueryProvider>
+        </SessionWrapper>
       </body>
     </html>
   );

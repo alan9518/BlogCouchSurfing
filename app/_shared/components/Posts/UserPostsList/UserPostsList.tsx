@@ -13,12 +13,12 @@ interface UserPostsListProps {
   userId: number;
 }
 
-export const UserPostsList = ({ userId }: UserPostsListProps) => {
+export const UserPostsList = ({ user }: UserPostsListProps) => {
   const {
     data: userPosts,
     isError,
     isLoading,
-  } = trpc.posts.getPostsByUserId.useQuery({ userId });
+  } = trpc.posts.getPostsByUserId.useQuery({ user });
 
   if (isError) {
     return <DynamicNoDataMessage message="error loading Posts" />;

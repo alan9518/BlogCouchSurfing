@@ -1,17 +1,21 @@
 import { Details } from '@/app/_shared/components/ProfileUser/Details';
+import { AuthOptions } from '@/app/_shared/lib/authOptions';
 import { ContentTabItem, ContentTabs } from '@/components/ContentTabs';
 import { UserPostsList } from '@/components/Posts/UserPostsList';
+import { getServerSession } from 'next-auth';
 
-export default function Profile({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default async function Profile() {
+  const session = await getServerSession(AuthOptions);
+  console.log('🚀 ~ Profile ~ session:', session);
+
   const tabsData: ContentTabItem[] = [
     {
       tabTitle: 'Details',
-      tabContent: <Details userId={parseInt(id, 10)} />,
+      tabContent: <Details user={session.user} />,
     },
     {
       tabTitle: 'Posts',
-      tabContent: <UserPostsList userId={parseInt(id, 10)} />,
+      tabContent: <UserPostsList user={session.user} />,
     },
   ];
   return (

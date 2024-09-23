@@ -4,7 +4,7 @@ import { trpc } from '@/app/_trpc/client';
 import dynamic from 'next/dynamic';
 
 interface DetailsProps {
-  userId: number;
+  user: any;
 }
 
 interface DetailsItemProps {
@@ -39,12 +39,18 @@ const DetailsItem = ({ detailLabel, detailData }: DetailsItemProps) => (
   </li>
 );
 
-export const Details = ({ userId }: DetailsProps) => {
+export const Details = ({ user }: DetailsProps) => {
+  console.log('🚀 ~ Details ~ user:', user);
   const {
     data: userDetails,
     isError,
     isLoading,
-  } = trpc.users.getUserById.useQuery({ userId });
+  } = trpc.users.getUserById.useQuery({
+    user: {
+      id: user.id, // Ensure user.id is defined
+      email: user.email,
+    },
+  });
 
   if (isError) return <DetailsError />;
 

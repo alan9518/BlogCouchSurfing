@@ -5,6 +5,13 @@ import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 import { publicProcedure, router } from '../trpc';
 
+const userSchema = z.object({
+  id: z.string(), // Use string since NextAuth session id is a string
+  name: z.string().nullable().optional(),
+  email: z.string().email().nullable().optional(),
+  image: z.string().nullable().optional(),
+});
+
 export const userRouter = router({
   getUsers: publicProcedure.query(async (): Promise<SelectUser[]> => {
     const users = await db.query.usersTable.findMany();
@@ -13,20 +20,28 @@ export const userRouter = router({
   getUserById: publicProcedure
     .input(
       z.object({
-        userId: z.number(),
+        user: userSchema,
       })
     )
     .query(async ({ input }): Promise<SelectUser | null> => {
-      const { userId } = input;
-      const user = await db.query.usersTable.findFirst({
-        where: (users, { eq }) => eq(users.id, userId),
+      const { user } = input;
+      console.log('🚀 ~ .query ~ user:', user);
+
+      const userFromDB = await db.query.usersTable.findFirst({
+        where: (users, { eq }) => eq(users.id, parseInt(user.id, 10)),
       });
-      return user || null;
+      console.log('🚀 ~ .query ~ userFromDB:', userFromDB);
+
+      return userFromDB || null;
     }),
   getUserFriends: publicProcedure
-    .input(z.object({ userId: z.number() }))
+    .input(
+      z.object({
+        user: userSchema,
+      })
+    )
     .query(async ({ input }): Promise<UserFriends[]> => {
-      const { userId } = input;
+      const { user } = input;
       const friends = await db
         .select({
           id: usersTable.id,
@@ -40,7 +55,7 @@ export const userRouter = router({
           friendshipsTable,
           eq(friendshipsTable.friendId, usersTable.id)
         )
-        .where(eq(friendshipsTable.userId, userId));
+        .where(eq(friendshipsTable.userId, parseInt(user.id, 10)));
 
       return friends || [];
     }),

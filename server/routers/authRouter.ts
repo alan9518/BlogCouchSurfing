@@ -1,13 +1,14 @@
+import { db } from '@/db';
+import { usersTable } from '@/db/schema';
 import cookie from 'cookie';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
-import { usersTable } from '@/db/schema';
-import { db } from '@/db';
 import { publicProcedure, router } from '../trpc';
 
 type LoginResponse = {
   cookieHeader: string;
   userId: number;
+  email: string;
 };
 
 export const authRouter = router({
@@ -57,6 +58,7 @@ export const authRouter = router({
       return {
         cookieHeader,
         userId: user.id,
+        email: user.email,
       };
     }),
 });

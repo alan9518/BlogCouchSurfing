@@ -1,23 +1,23 @@
 import { Feed } from '@/app/_shared/components/Feed';
+import { AuthOptions } from '@/app/_shared/lib/authOptions';
 import { serverClient } from '@/app/_trpc/serverClient';
+import { getServerSession } from 'next-auth';
 import { Suspense } from 'react';
 
-interface FeedPageProps {
-  searchParams: { userId?: string };
-}
+export default async function Home() {
+  const session = await getServerSession(AuthOptions);
 
-export default async function Home({ searchParams }: FeedPageProps) {
-  let userId;
+  if (!session) return null;
+  // let userId;
   let feedPosts;
   let friends;
   try {
-    userId = searchParams?.userId || '1';
     feedPosts = await serverClient.posts.getFeedPosts.query({
-      userId: parseInt(userId, 10),
+      user: session?.user,
     });
 
     friends = await serverClient.users.getUserFriends.query({
-      userId: parseInt(userId, 10),
+      user: session?.user,
     });
   } catch (error) {
     return null;
