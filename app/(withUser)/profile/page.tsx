@@ -11,15 +11,15 @@ export default async function Profile() {
   const tabsData: ContentTabItem[] = [
     {
       tabTitle: 'Details',
-      tabContent: <Details user={session.user} />,
+      tabContent: <Details userId={parseInt(session.user.id, 10)} />,
     },
     {
       tabTitle: 'Posts',
-      tabContent: <UserPostsList user={session.user} />,
+      tabContent: <UserPostsList userId={parseInt(session.user.id, 10)} />,
     },
   ];
   return (
-    <section className="pt-12 px-4 md:p-4 w-full bg-white  overflow-y-auto">
+    <section className="pt-12 px-4 md:p-4 w-full bg-white  overflow-y-auto h-dvh">
       <h2 className="text-2xl font-semibold mt-4">My Profile</h2>
 
       <div className="flex flex-col items-center justify-center mt-4">

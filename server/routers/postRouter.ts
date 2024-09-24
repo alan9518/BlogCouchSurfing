@@ -24,11 +24,11 @@ export const postRouter = router({
   getPostsByUserId: publicProcedure
     .input(
       z.object({
-        user: userSchema,
+        userId: z.number(),
       })
     )
     .query(async ({ input }): Promise<FeedPost[]> => {
-      const { user } = input;
+      const { userId } = input;
       const posts = await db
         .select({
           id: postsTable.id,
@@ -43,7 +43,7 @@ export const postRouter = router({
         })
         .from(postsTable)
         .innerJoin(usersTable, eq(postsTable.userId, usersTable.id))
-        .where(eq(postsTable.userId, parseInt(user.id, 10)));
+        .where(eq(postsTable.userId, userId));
 
       return posts.map((post) => ({
         ...post,
@@ -106,11 +106,11 @@ export const postRouter = router({
   getPostDetailsById: publicProcedure
     .input(
       z.object({
-        user: userSchema,
+        postId: z.number(),
       })
     )
     .query(async ({ input }): Promise<FeedPost | null> => {
-      const { user } = input;
+      const { postId } = input;
 
       const post = await db
         .select({
@@ -126,7 +126,7 @@ export const postRouter = router({
         })
         .from(postsTable)
         .innerJoin(usersTable, eq(postsTable.userId, usersTable.id))
-        .where(eq(postsTable.id, parseInt(user.id, 10)))
+        .where(eq(postsTable.id, postId))
         .limit(1);
 
       if (post.length === 0) return null;

@@ -20,17 +20,16 @@ export const userRouter = router({
   getUserById: publicProcedure
     .input(
       z.object({
-        user: userSchema,
+        userId: z.number(),
       })
     )
     .query(async ({ input }): Promise<SelectUser | null> => {
-      const { user } = input;
-      console.log('🚀 ~ .query ~ user:', user);
+      console.log('🚀 ~ .query ~ input:', input);
+      const { userId } = input;
 
       const userFromDB = await db.query.usersTable.findFirst({
-        where: (users, { eq }) => eq(users.id, parseInt(user.id, 10)),
+        where: (users, { eq }) => eq(users.id, userId),
       });
-      console.log('🚀 ~ .query ~ userFromDB:', userFromDB);
 
       return userFromDB || null;
     }),

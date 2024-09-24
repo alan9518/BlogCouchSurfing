@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface PostDetailsProps {
   title: string;
   content: string;
@@ -13,7 +15,15 @@ export const PostDetails = ({
   createdDate,
 }: PostDetailsProps) => (
   <section className="flex flex-col items-start justify-start gap-2">
-    <div className="w-full h-64" style={{ background: `url(${image})` }} />
+    <div className="relative w-full max-h-60" style={{ aspectRatio: '5 / 3' }}>
+      <Image
+        src={image}
+        alt="post image"
+        fill
+        className="object-cover rounded-sm"
+      />
+    </div>
+
     <h2 className="text-2xl font-semibold mt-4">{title}</h2>
     <div className="flex items-center justify-start gap-4">
       <span className="capitalize  text-gray-500 font-light">

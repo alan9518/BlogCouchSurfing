@@ -8,22 +8,25 @@ export const ProfileInfo = async () => {
   const session = await getServerSession(AuthOptions);
 
   const profileInfo = await serverClient.users.getUserById.query({
-    user: session.user,
+    userId: parseInt(session.user.id, 10),
   });
+
+  if (!profileInfo) return null;
 
   // Render the profile information
   return (
     <div className="flex flex-col items-center justify-center mb-4">
       <ProfilePic
-        profileId={profileInfo?.id || 1}
+        profileId={profileInfo.id}
         showBorder
         size="normal"
         link="profile"
+        useLinkProfileId={false}
       />
       <h2 className="text-black font-semibold capitalize">
-        {profileInfo?.firstName} {profileInfo?.lastName}
+        {profileInfo.firstName} {profileInfo.lastName}
       </h2>
-      <span className="text-gray-500 text-sm"> {profileInfo?.email} </span>
+      <span className="text-gray-500 text-sm"> {profileInfo.email} </span>
     </div>
   );
 };

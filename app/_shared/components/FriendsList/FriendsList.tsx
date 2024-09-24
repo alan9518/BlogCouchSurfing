@@ -14,6 +14,7 @@ export const FriendsList = ({ friends }: FriendsListProps) => (
         showBorder
         size="small"
         link="user"
+        useLinkProfileId
       />
     ))}
   </section>

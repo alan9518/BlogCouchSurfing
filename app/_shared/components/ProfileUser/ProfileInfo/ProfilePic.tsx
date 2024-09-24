@@ -7,16 +7,20 @@ interface ProfilePicProps {
   showBorder: boolean;
   size: 'normal' | 'small';
   link: string;
+  useLinkProfileId: boolean;
 }
 export const ProfilePic = ({
   profileId,
   showBorder,
   size,
   link,
+  useLinkProfileId,
 }: ProfilePicProps) => {
   const picSize = size === 'normal' ? 75 : 40;
+  const profileUrl = `/${link}${useLinkProfileId ? `/${profileId}` : ''}`;
+
   return (
-    <Link href={`/${link}/${profileId}`}>
+    <Link href={profileUrl}>
       <div
         className={` ${showBorder ? 'border border-orangeAccent rounded-full p-2' : ''} `}
       >
