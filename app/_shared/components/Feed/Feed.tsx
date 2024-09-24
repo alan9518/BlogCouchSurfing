@@ -4,6 +4,7 @@ import { FriendsList } from '@/components/FriendsList';
 import { NoDataMessage } from '@/components/NoDataMessage';
 import { Post } from '@/components/Posts/Post';
 import { UserFriends } from '@/types/users';
+
 import dynamic from 'next/dynamic';
 import { FeedPost } from '../../../../types/post'; // Import the Post type
 

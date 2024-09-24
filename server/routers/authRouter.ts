@@ -1,13 +1,14 @@
-import cookie from 'cookie';
+import { db } from '@/db';
+import { usersTable } from '@/db/schema';
+// import cookie from 'cookie';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
-import { usersTable } from '@/db/schema';
-import { db } from '@/db';
 import { publicProcedure, router } from '../trpc';
 
 type LoginResponse = {
-  cookieHeader: string;
+  // cookieHeader: string;
   userId: number;
+  email: string;
 };
 
 export const authRouter = router({
@@ -47,16 +48,17 @@ export const authRouter = router({
         throw new Error('Invalid password');
       }
 
-      const cookieHeader = cookie.serialize('userId', user.id.toString(), {
-        httpOnly: false,
-        maxAge: 604800, // 1 week
-        path: '/',
-        secure: false,
-      });
+      // const cookieHeader = cookie.serialize('userId', user.id.toString(), {
+      //   httpOnly: false,
+      //   maxAge: 604800, // 1 week
+      //   path: '/',
+      //   secure: false,
+      // });
 
       return {
-        cookieHeader,
+        // cookieHeader,
         userId: user.id,
+        email: user.email,
       };
     }),
 });

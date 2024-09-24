@@ -21,7 +21,7 @@ export const UserPostsList = ({ userId }: UserPostsListProps) => {
   } = trpc.posts.getPostsByUserId.useQuery({ userId });
 
   if (isError) {
-    return <DynamicNoDataMessage message="error loading Posts" />;
+    return <DynamicNoDataMessage message="Error loading Posts" />;
   }
 
   if (isLoading) {

@@ -18,7 +18,7 @@ export default function QueryProvider({
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: URL,
+          url: `${URL}/api/trpc`,
         }),
       ],
     })

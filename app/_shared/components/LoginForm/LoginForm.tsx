@@ -1,9 +1,8 @@
 'use client';
 
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { trpc } from '@/app/_trpc/client';
-import { deleteCookie } from '../../lib/cookie';
 
 interface FormData {
   email: string;
@@ -12,34 +11,36 @@ interface FormData {
 
 export const LoginForm = () => {
   const router = useRouter();
+
   const [formData, setFormData] = useState<FormData>({
     email: '',
     password: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  // Use the mutation for login
-  const loginMutation = trpc.auth.login.useMutation({
-    onSuccess: (data) => {
-      // Delete the existing userId cookie if it exists
-      deleteCookie('userId');
-
-      // Set the new cookie from the response
-      if (data.cookieHeader) {
-        document.cookie = data.cookieHeader;
-      }
-      router.push(`/feed?userId=${data.userId}`);
-    },
-    onError: (error) => {
-      // eslint-disable-next-line no-console
-      console.error('Login failed:', error.message);
-    },
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
+    try {
+      const result = await signIn('credentials', {
+        redirect: false,
+        email: formData.email,
+        password: formData.password,
+      });
 
-    // Call the login mutation
-    loginMutation.mutate(formData);
+      if (result?.error) {
+        setError(result.error);
+      }
+
+      if (result?.ok) {
+        router.push('/feed');
+      }
+    } catch {
+      setError('error signin in');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,15 +79,13 @@ export const LoginForm = () => {
 
       <button
         type="submit"
-        disabled={loginMutation.isLoading}
+        disabled={isLoading}
         className="p-2 bg-orangeAccent w-full text-white font-semibold"
       >
-        {loginMutation.isLoading ? 'Logging in...' : 'Login'}
+        {isLoading ? 'Logging in...' : 'Login'}
       </button>
 
-      {loginMutation.error && (
-        <p style={{ color: 'red' }}>{loginMutation.error.message}</p>
-      )}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </form>
   );
 };

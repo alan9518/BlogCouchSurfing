@@ -1,5 +1,3 @@
-import { eq, inArray } from 'drizzle-orm';
-import { z } from 'zod';
 import { db } from '@/db';
 import {
   friendshipsTable,
@@ -8,7 +6,16 @@ import {
   type SelectPost,
 } from '@/db/schema';
 import { FeedPost } from '@/types/post';
+import { eq, inArray } from 'drizzle-orm';
+import { z } from 'zod';
 import { publicProcedure, router } from '../trpc';
+
+const userSchema = z.object({
+  id: z.string(), // Use string since NextAuth session id is a string
+  name: z.string().nullable().optional(),
+  email: z.string().email().nullable().optional(),
+  image: z.string().nullable().optional(),
+});
 
 export const postRouter = router({
   getAllPosts: publicProcedure.query(
@@ -50,18 +57,18 @@ export const postRouter = router({
   getFeedPosts: publicProcedure
     .input(
       z.object({
-        userId: z.number(),
+        user: userSchema,
       })
     )
     .query(async ({ input }): Promise<FeedPost[]> => {
-      const { userId } = input;
+      const { user } = input;
 
       const friends = await db
         .select({
           friendId: friendshipsTable.friendId,
         })
         .from(friendshipsTable)
-        .where(eq(friendshipsTable.userId, userId));
+        .where(eq(friendshipsTable.userId, parseInt(user.id, 10)));
 
       const friendIds = friends.map((friend) => friend.friendId);
 

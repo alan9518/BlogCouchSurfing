@@ -1,37 +1,32 @@
-'use client';
+import { AuthOptions } from '@/app/_shared/lib/authOptions';
+import { serverClient } from '@/app/_trpc/serverClient';
+import { getServerSession } from 'next-auth';
 
-import { useSearchParams } from 'next/navigation';
-import { trpc } from '@/app/_trpc/client';
-import { ProfileInfoLoader } from './ProfileInfoLoader';
 import { ProfilePic } from './ProfilePic';
 
-export const ProfileInfo = () => {
-  const searchParams = useSearchParams();
-  const userId = searchParams.get('userId');
-  const {
-    data: profileInfo,
-    isLoading,
-    isError,
-  } = trpc.users.getUserById.useQuery({
-    userId: userId ? parseInt(userId, 10) : 1,
+export const ProfileInfo = async () => {
+  const session = await getServerSession(AuthOptions);
+
+  const profileInfo = await serverClient.users.getUserById.query({
+    userId: parseInt(session?.user?.id || '0', 10),
   });
 
-  if (isError) return null;
+  if (!profileInfo) return null;
 
-  if (isLoading) return <ProfileInfoLoader />;
-
+  // Render the profile information
   return (
-    <div className="flex flex-col items-center  justify-center mb-4">
+    <div className="flex flex-col items-center justify-center mb-4">
       <ProfilePic
-        profileId={profileInfo?.id || 1}
+        profileId={profileInfo.id}
         showBorder
         size="normal"
         link="profile"
+        useLinkProfileId={false}
       />
       <h2 className="text-black font-semibold capitalize">
-        {profileInfo?.firstName} {profileInfo?.lastName}
+        {profileInfo.firstName} {profileInfo.lastName}
       </h2>
-      <span className="text-gray-500 text-sm"> {profileInfo?.email} </span>
+      <span className="text-gray-500 text-sm"> {profileInfo.email} </span>
     </div>
   );
 };
