@@ -40,7 +40,6 @@ const DetailsItem = ({ detailLabel, detailData }: DetailsItemProps) => (
 );
 
 export const Details = ({ userId }: DetailsProps) => {
-  console.log('🚀 ~ Details ~ userId:', userId);
   const {
     data: userDetails,
     isError,

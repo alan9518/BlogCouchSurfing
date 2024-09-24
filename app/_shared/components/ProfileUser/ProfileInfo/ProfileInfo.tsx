@@ -8,7 +8,7 @@ export const ProfileInfo = async () => {
   const session = await getServerSession(AuthOptions);
 
   const profileInfo = await serverClient.users.getUserById.query({
-    userId: parseInt(session.user.id, 10),
+    userId: parseInt(session?.user?.id || '0', 10),
   });
 
   if (!profileInfo) return null;

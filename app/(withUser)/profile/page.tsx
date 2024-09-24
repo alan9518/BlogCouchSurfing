@@ -6,16 +6,16 @@ import { getServerSession } from 'next-auth';
 
 export default async function Profile() {
   const session = await getServerSession(AuthOptions);
-  console.log('🚀 ~ Profile ~ session:', session);
+  const userId = parseInt(session?.user?.id || '0', 10);
 
   const tabsData: ContentTabItem[] = [
     {
       tabTitle: 'Details',
-      tabContent: <Details userId={parseInt(session.user.id, 10)} />,
+      tabContent: <Details userId={userId} />,
     },
     {
       tabTitle: 'Posts',
-      tabContent: <UserPostsList userId={parseInt(session.user.id, 10)} />,
+      tabContent: <UserPostsList userId={userId} />,
     },
   ];
   return (

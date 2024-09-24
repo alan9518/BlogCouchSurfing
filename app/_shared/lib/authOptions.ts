@@ -1,10 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { serverClient } from '@/app/_trpc/serverClient';
 import { TRPCClientError } from '@trpc/client';
-import { User } from 'next-auth';
+import { NextAuthOptions, User } from 'next-auth';
+
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-export const AuthOptions = {
+export const AuthOptions: NextAuthOptions = {
   secret: process.env.AUTH_SECRET,
   pages: {
     signIn: '/',
@@ -36,15 +37,13 @@ export const AuthOptions = {
             return {
               id: user.userId.toString(),
               email: user.email,
-            }; // Return user object if successful
+            };
           }
         } catch (error) {
           if (error instanceof TRPCClientError) {
-            console.error('TRPC error:', error.message);
             return null;
-            // You can handle different error types here if needed
           }
-          console.error('Unexpected error:', error);
+
           return null;
         }
         return null;
@@ -62,7 +61,7 @@ export const AuthOptions = {
     async session({ session, token }) {
       session.user = {
         id: token?.id?.toString() || '',
-        email: token.email,
+        email: token.email || '',
       };
       return session;
     },

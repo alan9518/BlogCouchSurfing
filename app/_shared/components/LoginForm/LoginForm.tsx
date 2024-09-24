@@ -1,6 +1,6 @@
 'use client';
 
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -11,8 +11,7 @@ interface FormData {
 
 export const LoginForm = () => {
   const router = useRouter();
-  const session = useSession();
-  console.log('🚀 ~ LoginForm ~ session:', session);
+
   const [formData, setFormData] = useState<FormData>({
     email: '',
     password: '',
@@ -35,7 +34,6 @@ export const LoginForm = () => {
       }
 
       if (result?.ok) {
-        console.log('🚀 ~ LoginForm ~ session:', session);
         router.push('/feed');
       }
     } catch {
@@ -43,9 +41,6 @@ export const LoginForm = () => {
     } finally {
       setIsLoading(false);
     }
-
-    // Call the login mutation
-    // loginMutation.mutate(formData);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

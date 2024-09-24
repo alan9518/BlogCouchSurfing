@@ -24,7 +24,6 @@ export const userRouter = router({
       })
     )
     .query(async ({ input }): Promise<SelectUser | null> => {
-      console.log('🚀 ~ .query ~ input:', input);
       const { userId } = input;
 
       const userFromDB = await db.query.usersTable.findFirst({
